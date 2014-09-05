@@ -1,2 +1,4 @@
-AppView = require './views/app-view'
-appView = new AppView(el: 'body')
+TodoRouter = require './router'
+
+router = new TodoRouter
+router.start()

@@ -1,31 +1,38 @@
 Backbone = require 'backbone'
-Backbone.$ = require 'jquery'
+$ = require 'jquery'
+Backbone.$ = $
+
+TodoView = require './todo-view'
 
 
 AppView = Backbone.View.extend
 
-  template: require '../templates/app-template'
+  el: '#todoapp'
+
+  events:
+    'keypress #new-todo': 'createOnEnter'
 
   initialize: ->
-    @render()
+    @listenTo(@collection, 'add', @addOne)
+    return
 
-  render: ->
-    @$el.html @template
-      title: 'Gulp All The Things!'
-      description: 'Starter Gulp + Browserify project equipped to handle the following:'
-      tools: [
-        'Browserify-shim'
-        'Browserify / Watchify'
-        'CoffeeScript'
-        'Compass'
-        'SASS'
-        'Handlebars'
-        'Image optimization'
-        'LiveReload'
-        'Non common-js jquery plugin'
-        'Npm backbone'
-        'Npm jquery'
-        'Underscore (included with Backbone)'
-      ]
+
+  addOne: (item) ->
+    view = new TodoView model: item
+    @$('#todo-list').append view.render().el
+
+
+  createOnEnter: (e) ->
+    input = @$('#new-todo')
+
+    return if e.which isnt 13 or not input.val().trim()
+
+    @collection.add
+      title: input.val().trim()
+      checked: false
+
+    input.val('')
+    return
+
 
 module.exports = AppView

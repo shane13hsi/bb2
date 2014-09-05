@@ -4,7 +4,7 @@ TodoModel = Backbone.Model.extend
 
   defaults:
     title: ''
-    completed: false
+    checked: false
 
   toggle: ->
     this.set 'completed', !this.get('completed')
