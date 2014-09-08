@@ -14,6 +14,7 @@ AppView = Backbone.View.extend
 
   initialize: ->
     @listenTo(@collection, 'add', @addOne)
+    @listenTo(@collection, 'change:completed', @filterOne)
     return
 
 
@@ -27,12 +28,15 @@ AppView = Backbone.View.extend
 
     return if e.which isnt 13 or not input.val().trim()
 
-    @collection.add
+    @collection.create
       title: input.val().trim()
       checked: false
 
     input.val('')
     return
+
+  filterOne: (todo) ->
+#    todo.trigger 'visible'
 
 
 module.exports = AppView
