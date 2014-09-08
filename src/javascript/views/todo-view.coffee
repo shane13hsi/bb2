@@ -7,7 +7,7 @@ TodoView = Backbone.View.extend
 
   tagName: 'li'
 
-  template: require '../templates/todo-item-template.hbs'
+  template: require '../templates/todo-item-template.ejs'
 
   events:
     'click .toggle': 'toggleComplete'
